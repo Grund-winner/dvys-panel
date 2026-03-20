@@ -1,0 +1,26 @@
+# Cloudflare Workers Configuration
+name = "dvys-bot"
+main = "bot.js"
+compatibility_date = "2026-03-20"
+
+# Environment variables (non-sensitive)
+[vars]
+ENVIRONMENT = "production"
+
+# Secrets (use `wrangler secret put` to set these)
+# - BOT_TOKEN
+# - SUPABASE_URL
+# - SUPABASE_KEY
+# - CHANNEL_ID
+# - CHANNEL_LINK
+# - AFFILIATE_CODE
+
+# Routes (optional - for custom domains)
+# [[routes]]
+# pattern = "bot.votredomaine.com"
+# custom_domain = true
+
+# KV Namespace (optional - for caching)
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "your-kv-namespace-id"

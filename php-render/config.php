@@ -12,7 +12,7 @@ define('SUPABASE_TABLE', 'users');
 // Bot configuration
 define('TOKEN', getenv('BOT_TOKEN') ?: '8608984092:AAFMpElCmpTFMZAKj4tsBSBQ26n7F3z0zRQ');
 define('CHANNEL', 'dsc_tg');
-define('PROMOCODE', 'DVYS');
+define('PROMOCODE', 'ufjv');
 define('P_PARAM', 'sub1');
 
 // Admin Panel Password (depuis variable d'environnement)

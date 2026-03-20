@@ -11,7 +11,7 @@ Panel d'administration pour le bot DVYS, hébergé sur Render.
 git init
 git add .
 git commit -m "Initial commit"
-git remote add origin https://github.com/Grund-winner/dvys-panel.git
+git remote add origin https://github.com/votre-user/dvys-panel.git
 git push -u origin main
 ```
 
@@ -46,13 +46,13 @@ DEBUG_MODE=false
 
 ```bash
 # Test de santé
-curl https://dvys-panel.onrender.com/
+curl https://votre-app.onrender.com/
 
 # Test du panel
-curl "https://dvys-panel.onrender.com/broadcast.php?pass=Wu9GYt_T_vGALHdD"
+curl "https://votre-app.onrender.com/broadcast.php?pass=Wu9GYt_T_vGALHdD"
 
 # Test du postback
-curl "https://dvys-panel.onrender.com/postback.php?event=registration&sub1=123456789"
+curl "https://votre-app.onrender.com/postback.php?event=registration&sub1=123456789"
 ```
 
 ## 📁 Structure
