@@ -46,13 +46,13 @@ DEBUG_MODE=false
 
 ```bash
 # Test de santé
-curl https://votre-app.onrender.com/
+curl https://dvys-panel.onrender.com/
 
 # Test du panel
-curl "https://votre-app.onrender.com/broadcast.php?pass=Wu9GYt_T_vGALHdD"
+curl "https://dvys-panel.onrender.com/broadcast.php?pass=Wu9GYt_T_vGALHdD"
 
 # Test du postback
-curl "https://votre-app.onrender.com/postback.php?event=registration&sub1=123456789"
+curl "https://dvys-panel.onrender.com/postback.php?event=registration&sub1=123456789"
 ```
 
 ## 📁 Structure
