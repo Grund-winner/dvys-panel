@@ -1,239 +1,106 @@
-# 🤖 DVYS PRO - Bot Telegram 1Win
+# DVYS Admin Panel - PHP
 
-Bot Telegram multilingue pour la promotion de la plateforme 1Win avec vérification d'adhésion canal, tracking des inscriptions/dépôts, et panel d'administration.
+Panel d'administration pour le bot DVYS, hébergé sur Render.
 
-## ✨ Fonctionnalités
+## 🚀 Déploiement sur Render
 
-### Bot Telegram
-- ✅ **Vérification obligatoire** d'adhésion au canal
-- 🌍 **10 langues** supportées :
-  - 🇫🇷 Français
-  - 🇬🇧 English
-  - 🇪🇸 Español
-  - 🇧🇷 Brazilian
-  - 🇷🇺 Русский
-  - 🇮🇳 हिंदी
-  - 🇺🇿 O'zbek
-  - 🇦🇿 Azərbaycan
-  - 🇹🇷 Türkçe
-  - 🇸🇦 العربية
-- 🖼️ **Images** pour chaque menu
-- 🗑️ **Auto-suppression** des anciens messages
-- 🔗 **Intégration** page de prédiction
-- 📊 **Tracking** inscription et dépôt
+### Étape 1: Créer le dépôt GitHub
 
-### Panel Admin
-- 📈 **Statistiques** en temps réel
-- 📢 **Diffusion** ciblée (tous/inscrits/déposants)
-- 🖼️ **Support** texte/photo/vidéo
-- 📜 **Historique** des diffusions
-- 👥 **Liste** des utilisateurs avec filtres
-
-### Postback 1Win
-- 📝 Réception événements `registration`
-- 💰 Réception événements `deposit`
-- 🔄 Mise à jour automatique BDD
-- 📋 Logs des postbacks
-
-## 🏗️ Architecture
-
-```
-┌─────────────────────────────────────────────────────┐
-│                    UTILISATEUR                      │
-└──────────────┬──────────────────────────────────────┘
-               │
-    ┌──────────▼──────────┐
-    │  TELEGRAM (Bot)     │
-    └──────────┬──────────┘
-               │
-    ┌──────────┼──────────┐
-    │          │          │
-    ▼          ▼          ▼
-┌────────┐ ┌────────┐ ┌────────┐
-│Cloudflare│ │Supabase│ │ Render │
-│ Workers│ │  (BDD) │ │ (PHP)  │
-└────────┘ └────────┘ └────────┘
-                              │
-                              ▼
-                       ┌────────────┐
-                       │ 1Win Postback
-                       └────────────┘
-```
-
-## 📁 Structure des fichiers
-
-```
-output/
-├── bot.js                    # Code du bot (Cloudflare Workers)
-├── supabase_schema.sql       # Schéma de la base de données
-├── GUIDE_DEPLOIEMENT.md      # Guide complet de déploiement
-├── php-render/
-│   ├── config.php           # Configuration et classe Supabase
-│   ├── postback.php         # Réception des postbacks 1Win
-│   ├── broadcast.php        # Panel admin (interface)
-│   ├── broadcast_worker.php # Worker de diffusion
-│   ├── get_progress.php     # Progression des diffusions
-│   ├── composer.json        # Dépendances PHP
-│   └── .htaccess           # Configuration Apache
-└── README.md               # Ce fichier
-```
-
-## 🚀 Déploiement rapide
-
-### 1. Supabase (Base de données)
-```sql
--- Exécuter dans l'éditeur SQL de Supabase
--- Voir supabase_schema.sql
-```
-
-### 2. Cloudflare Workers (Bot)
 ```bash
-# Installer Wrangler
-npm install -g wrangler
-
-# Se connecter
-wrangler login
-
-# Créer et déployer
-wrangler init dvys-bot
-cp bot.js src/index.js
-wrangler deploy
-
-# Configurer le webhook
-curl -X POST "https://api.telegram.org/botTOKEN/setWebhook" \
-  -d '{"url": "https://votre-bot.workers.dev/webhook"}'
-```
-
-### 3. Render (Panel Admin + Postback)
-```bash
-# Créer le dépôt
+# Créer un nouveau dépôt sur GitHub
 git init
 git add .
 git commit -m "Initial commit"
-git push origin main
-
-# Déployer sur Render.com
-# - Connecter le dépôt
-# - Runtime: PHP
-# - Start Command: php -S 0.0.0.0:$PORT
+git remote add origin https://github.com/votre-user/dvys-panel.git
+git push -u origin main
 ```
 
-### 4. Configuration 1Win Postback
-```
-URL: https://votre-app.onrender.com/postback.php?event=registration&sub1={sub1}
-```
+### Étape 2: Déployer sur Render
 
-## ⚙️ Configuration
+1. Allez sur [render.com](https://render.com)
+2. Cliquez sur **"New +"** > **"Web Service"**
+3. Connectez votre compte GitHub et sélectionnez le dépôt
+4. Configuration:
+   - **Name**: `dvys-panel`
+   - **Runtime**: `PHP`
+   - **Branch**: `main`
+   - **Build Command**: *laisser vide*
+   - **Start Command**: `php -S 0.0.0.0:$PORT`
+5. Cliquez sur **"Create Web Service"**
 
-### Variables d'environnement (Render)
-```env
+### Étape 3: Variables d'environnement
+
+Dans le dashboard Render:
+1. Allez dans **Settings** > **Environment**
+2. Ajoutez les variables:
+
+```
 SUPABASE_URL=https://votre-projet.supabase.co
-SUPABASE_KEY=votre-cle-anon
-BOT_TOKEN=votre-token-telegram
-ADMIN_PASSWORD=mot-de-passe-admin
+SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+BOT_TOKEN=7020321073:AAF3vjc_DGe8sf_CfGiz48rXKl-BPO9F2Ng
+ADMIN_PASSWORD=Wu9GYt_T_vGALHdD
 DEBUG_MODE=false
 ```
 
-### Configuration bot.js
-```javascript
-const CONFIG = {
-    BOT_TOKEN: "votre-token",
-    SUPABASE_URL: "https://votre-projet.supabase.co",
-    SUPABASE_KEY: "votre-cle",
-    CHANNEL_ID: "@votrecanal",
-    CHANNEL_LINK: "https://t.me/votrecanal",
-    ONE_WIN_DOMAIN: "https://1wrlst.com",
-    AFFILIATE_CODE: "votre-code",
-    PREDICTION_URL: "https://votre-site.com/prediction",
-    // ...
-};
-```
+### Étape 4: Tester
 
-## 📊 Tables Supabase
-
-| Table | Description |
-|-------|-------------|
-| `users` | Utilisateurs du bot (id, langue, statuts) |
-| `message_history` | Historique pour auto-suppression |
-| `postback_logs` | Logs des postbacks reçus |
-| `broadcast_logs` | Historique des diffusions |
-| `user_sessions` | Sessions utilisateurs |
-| `admin_users` | Administrateurs |
-
-## 🔗 URLs importantes
-
-| Service | URL |
-|---------|-----|
-| Bot Webhook | `https://votre-bot.workers.dev/webhook` |
-| Health Check | `https://votre-bot.workers.dev/health` |
-| Panel Admin | `https://votre-app.onrender.com/broadcast.php?pass=MDP` |
-| Postback | `https://votre-app.onrender.com/postback.php` |
-
-## 🛠️ Commandes utiles
-
-### Tester le bot
 ```bash
-# Vérifier le webhook
-curl "https://api.telegram.org/botTOKEN/getWebhookInfo"
+# Test de santé
+curl https://votre-app.onrender.com/
 
-# Tester le health check
-curl "https://votre-bot.workers.dev/health"
+# Test du panel
+curl "https://votre-app.onrender.com/broadcast.php?pass=Wu9GYt_T_vGALHdD"
+
+# Test du postback
+curl "https://votre-app.onrender.com/postback.php?event=registration&sub1=123456789"
 ```
 
-### Tester le postback
-```bash
-# Test registration
-curl "https://votre-app.onrender.com/postback.php?event=registration&sub1=123456"
+## 📁 Structure
 
-# Test deposit
-curl "https://votre-app.onrender.com/postback.php?event=deposit&sub1=123456"
+```
+php-render/
+├── config.php              # Configuration Supabase
+├── postback.php            # Réception postbacks 1Win
+├── broadcast.php           # Panel admin (interface)
+├── broadcast_worker.php    # Worker de diffusion
+├── get_progress.php        # Progression des diffusions
+├── composer.json           # Configuration PHP
+├── .htaccess              # Sécurité Apache
+└── README.md              # Ce fichier
 ```
 
-## 🐛 Troubleshooting
+## 🔗 URLs
 
-### Le bot ne répond pas
-1. Vérifier le webhook: `getWebhookInfo`
-2. Vérifier les logs Cloudflare
-3. Vérifier que le token est correct
-
-### Postback ne fonctionne pas
-1. Vérifier les logs Render
-2. Tester manuellement avec curl
-3. Vérifier les variables d'environnement
-
-### Diffusion bloquée
-- Render a une limite de 512MB RAM
-- Envoyer par lots de 500 utilisateurs max
-- Utiliser le filtre pour cibler
-
-## 📚 Documentation
-
-- [Guide de déploiement complet](GUIDE_DEPLOIEMENT.md)
-- [Documentation Supabase](https://supabase.com/docs)
-- [Documentation Cloudflare Workers](https://developers.cloudflare.com/workers/)
-- [Documentation Render](https://render.com/docs)
-- [Documentation 1Win Partners](https://1win-partners.com/fr/blog/posts/how-to-set-up-postbacks-via-telegram/)
+| Endpoint | Description |
+|----------|-------------|
+| `/` | Health check |
+| `/broadcast.php?pass=MDP` | Panel admin |
+| `/postback.php` | Réception postbacks |
+| `/broadcast_worker.php?pass=MDP` | Worker diffusion (POST) |
+| `/get_progress.php?pass=MDP` | Progression diffusion |
 
 ## 🔒 Sécurité
 
-- ✅ HTTPS partout (Cloudflare + Render)
-- ✅ Variables d'environnement pour les secrets
-- ✅ RLS activé sur Supabase
-- ✅ Authentification requise pour le panel
-- ✅ Headers de sécurité configurés
+- Le panel nécessite le paramètre `pass` dans l'URL
+- Le mot de passe est défini dans la variable d'environnement `ADMIN_PASSWORD`
+- Les fichiers `.env`, `.log`, `.sql` sont protégés par `.htaccess`
+
+## 🐛 Debugging
+
+Activer le mode debug:
+```
+DEBUG_MODE=true
+```
+
+Les logs seront écrits dans `logs/`.
+
+## 📊 Limitations Render (Gratuit)
+
+- **RAM**: 512MB
+- **CPU**: Partagé
+- **Sleep**: Après 15min d'inactivité
+- **Diffusions**: Limiter à 500 utilisateurs par lot
 
 ## 📝 License
 
 Propriétaire - DVYS Team
-
-## 🤝 Support
-
-Pour toute question ou problème:
-1. Consulter le [Guide de déploiement](GUIDE_DEPLOIEMENT.md)
-2. Vérifier les logs dans les dashboards
-3. Ouvrir une issue sur le dépôt
-
----
-
-**Version**: 2.0  
-**Dernière mise à jour**: Mars 2026
