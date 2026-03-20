@@ -10,7 +10,7 @@ define('SUPABASE_KEY', getenv('SUPABASE_KEY') ?: 'eyJhbGciOiJIUzI1NiIsInR5cCI6Ik
 define('SUPABASE_TABLE', 'users');
 
 // Bot configuration
-define('TOKEN', getenv('BOT_TOKEN') ?: '7020321073:AAF3vjc_DGe8sf_CfGiz48rXKl-BPO9F2Ng');
+define('TOKEN', getenv('BOT_TOKEN') ?: '8608984092:AAFMpElCmpTFMZAKj4tsBSBQ26n7F3z0zRQ');
 define('CHANNEL', 'dsc_tg');
 define('PROMOCODE', 'DVYS');
 define('P_PARAM', 'sub1');
