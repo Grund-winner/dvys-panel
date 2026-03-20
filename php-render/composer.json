@@ -1,0 +1,19 @@
+{
+  "name": "dvys/admin-panel",
+  "description": "DVYS Telegram Bot Admin Panel",
+  "type": "project",
+  "require": {
+    "php": ">=8.0"
+  },
+  "authors": [
+    {
+      "name": "DVYS Team",
+      "email": "contact@dvys.com"
+    }
+  ],
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  }
+}
