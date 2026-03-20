@@ -5,7 +5,7 @@
 // ============================================
 
 const CONFIG = {
-    BOT_TOKEN: "7020321073:AAF3vjc_DGe8sf_CfGiz48rXKl-BPO9F2Ng",
+    BOT_TOKEN: "8608984092:AAFMpElCmpTFMZAKj4tsBSBQ26n7F3z0zRQ",
     SUPABASE_URL: "https://fpcioaiiykttexprlkpz.supabase.co",
     SUPABASE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZwY2lvYWlpeWt0dGV4cHJsa3B6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NDIyMzksImV4cCI6MjA4ODMxODIzOX0.WIX1TmE3ELKNqISp9jE4QYtQ3GFFf7N37hKVkO20_NI",
     CHANNEL_ID: "@dvyschan",
