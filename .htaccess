@@ -1,44 +1,19 @@
-# DVYS Admin Panel - Security Configuration
-
-# Disable directory browsing
+# Désactiver l'affichage des répertoires
 Options -Indexes
 
-# Protect sensitive files
-<FilesMatch "^\.">
+# Activer le moteur de réécriture
+RewriteEngine On
+
+# Protéger les fichiers sensibles
+<FilesMatch "^\.env|config\.php|supabase_schema\.sql|Dockerfile|composer\.json">
     Order allow,deny
     Deny from all
 </FilesMatch>
 
-<FilesMatch "\.(json|log|sql|env)$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
+# Protéger les dossiers sensibles
+RewriteRule ^(logs|progress)/ - [F,L]
 
-# Enable rewrite engine
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-    
-    # Redirect to HTTPS
-    RewriteCond %{HTTPS} off
-    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
-</IfModule>
-
-# PHP settings
-<IfModule mod_php.c>
-    php_flag display_errors off
-    php_flag log_errors on
-    php_value error_log logs/php_errors.log
-    php_value upload_max_filesize 10M
-    php_value post_max_size 10M
-    php_value max_execution_time 300
-    php_value memory_limit 256M
-</IfModule>
-
-# Security headers
-<IfModule mod_headers.c>
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-Frame-Options "SAMEORIGIN"
-    Header set X-XSS-Protection "1; mode=block"
-    Header set Referrer-Policy "strict-origin-when-cross-origin"
-</IfModule>
+# Forcer le HTTPS si possible
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
