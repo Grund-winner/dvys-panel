@@ -38,7 +38,7 @@ class SupabaseClient {
     /**
      * Effectue une requête à l'API Supabase
      */
-    private function request($method, $endpoint = '', $data = null, $query = '') {
+    public function request($method, $endpoint = '', $data = null, $query = '') {
         $url = $this->url . '/rest/v1/' . $this->table . $endpoint;
         if ($query) {
             $url .= '?' . $query;
